@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using SkiaSharp;
 using Svg.Skia;
 
@@ -8,40 +9,58 @@ namespace SvgProcessingApp
     {
         static void Main(string[] args)
         {
-            if (args.Length < 2)
+            if (args.Length < 1)
             {
-                Console.WriteLine("Usage: SvgProcessingApp <input.svg> <output.png>");
+                Console.WriteLine("Usage: SvgProcessingApp <directoryPath>");
                 return;
             }
 
-            string inputFilePath = args[0];
-            string outputFilePath = args[1];
-
-            try
+            string directoryPath = args[0];
+            if (!Directory.Exists(directoryPath))
             {
-                var svg = new SKSvg();
-                svg.Load(inputFilePath);
+                Console.WriteLine($"Directory does not exist: {directoryPath}");
+                return;
+            }
 
-                if (svg.Picture != null)
+            var svgFiles = Directory.GetFiles(directoryPath, "*.svg");
+            int fileCounter = 1;
+
+            foreach (var svgFilePath in svgFiles)
+            {
+                string outputFilePath = Path.Combine(directoryPath, $"output_{fileCounter}.png");
+
+                try
                 {
-                    using (var image = SKImage.FromPicture(svg.Picture, svg.Picture.CullRect.Size.ToSizeI()))
-                    using (var data = image.Encode(SKEncodedImageFormat.Png, 80))
+                    var svg = new SKSvg();
+                    svg.Load(svgFilePath);
+
+                    if (svg.Picture != null)
                     {
-                        using (var stream = System.IO.File.OpenWrite(outputFilePath))
+                        using (var image = SKImage.FromPicture(svg.Picture, svg.Picture.CullRect.Size.ToSizeI()))
+                        using (var data = image.Encode(SKEncodedImageFormat.Png, 80))
                         {
-                            data.SaveTo(stream);
+                            using (var stream = System.IO.File.OpenWrite(outputFilePath))
+                            {
+                                data.SaveTo(stream);
+                            }
                         }
+                        Console.WriteLine($"SVG processed and saved to {outputFilePath}");
+                        fileCounter++;
                     }
-                    Console.WriteLine($"SVG processed and saved to {outputFilePath}");
+                    else
+                    {
+                        Console.WriteLine($"Failed to load SVG file: {svgFilePath}");
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    Console.WriteLine("Failed to load SVG file.");
+                    Console.WriteLine($"An error occurred processing {svgFilePath}: {ex.Message}");
                 }
             }
-            catch (Exception ex)
+
+            if (fileCounter == 1) // No files were processed
             {
-                Console.WriteLine($"An error occurred: {ex.Message}");
+                Console.WriteLine("No SVG files found to process.");
             }
         }
     }
