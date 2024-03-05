@@ -1,1 +1,1 @@
-SVG Thumbnails. Modify source to make full size. Cross PLatform. Linux Mac Windows.
+SVG To PNG. Cross PLatform. Linux Mac Windows.
