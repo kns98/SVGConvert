@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using SkiaSharp;
 using Svg.Skia;
@@ -9,9 +9,9 @@ namespace SvgProcessingApp
     {
         static void Main(string[] args)
         {
-            if (args.Length < 1)
+            if (args.Length < 2)
             {
-                Console.WriteLine("Usage: SvgProcessingApp <directoryPath>");
+                Console.WriteLine("Usage: SvgProcessingApp <directoryPath> <width>");
                 return;
             }
 
@@ -19,6 +19,12 @@ namespace SvgProcessingApp
             if (!Directory.Exists(directoryPath))
             {
                 Console.WriteLine($"Directory does not exist: {directoryPath}");
+                return;
+            }
+
+            if (!int.TryParse(args[1], out int desiredWidth))
+            {
+                Console.WriteLine("Invalid width provided.");
                 return;
             }
 
@@ -36,16 +42,28 @@ namespace SvgProcessingApp
 
                     if (svg.Picture != null)
                     {
-                        using (var image = SKImage.FromPicture(svg.Picture, svg.Picture.CullRect.Size.ToSizeI()))
-                        using (var data = image.Encode(SKEncodedImageFormat.Png, 80))
+                        // Calculate new height to maintain aspect ratio
+                        var originalWidth = svg.Picture.CullRect.Width;
+                        var originalHeight = svg.Picture.CullRect.Height;
+                        var aspectRatio = originalHeight / originalWidth;
+                        var desiredHeight = (int)(desiredWidth * aspectRatio);
+
+                        using (var bitmap = new SKBitmap(desiredWidth, desiredHeight))
+                        using (var canvas = new SKCanvas(bitmap))
                         {
-                            using (var stream = System.IO.File.OpenWrite(outputFilePath))
+                            canvas.Clear(SKColors.White);
+                            canvas.DrawPicture(svg.Picture, desiredWidth, desiredHeight);
+                            using (var image = SKImage.FromBitmap(bitmap))
+                            using (var data = image.Encode(SKEncodedImageFormat.Png, 100))
                             {
-                                data.SaveTo(stream);
+                                using (var stream = File.OpenWrite(outputFilePath))
+                                {
+                                    data.SaveTo(stream);
+                                }
                             }
+                            Console.WriteLine($"SVG processed and saved to {outputFilePath}");
+                            fileCounter++;
                         }
-                        Console.WriteLine($"SVG processed and saved to {outputFilePath}");
-                        fileCounter++;
                     }
                     else
                     {
