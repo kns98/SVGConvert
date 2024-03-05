@@ -42,17 +42,12 @@ namespace SvgProcessingApp
 
                     if (svg.Picture != null)
                     {
-                        // Calculate new height to maintain aspect ratio
-                        var originalWidth = svg.Picture.CullRect.Width;
-                        var originalHeight = svg.Picture.CullRect.Height;
-                        var aspectRatio = originalHeight / originalWidth;
-                        var desiredHeight = (int)(desiredWidth * aspectRatio);
+                        float originalWidth = svg.Picture.CullRect.Width;
+                        float scaleX = desiredWidth / originalWidth;
+                        float scaleY = scaleX; // Maintain aspect ratio
 
-                        using (var bitmap = new SKBitmap(desiredWidth, desiredHeight))
-                        using (var canvas = new SKCanvas(bitmap))
+                        using (var bitmap = SKPictureExtensions.ToBitmap(svg.Picture, SKColors.Transparent, scaleX, scaleY, SKColorType.Rgba8888, SKAlphaType.Unpremul, SKColorSpace.CreateSrgb()))
                         {
-                            canvas.Clear(SKColors.White);
-                            canvas.DrawPicture(svg.Picture, desiredWidth, desiredHeight);
                             using (var image = SKImage.FromBitmap(bitmap))
                             using (var data = image.Encode(SKEncodedImageFormat.Png, 100))
                             {
