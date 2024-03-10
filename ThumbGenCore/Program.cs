@@ -33,7 +33,7 @@ namespace SvgProcessingApp
 
             foreach (var svgFilePath in svgFiles)
             {
-                string outputFilePath = Path.Combine(directoryPath, $"output_{fileCounter}.png");
+                string outputFilePath = Path.Combine(directoryPath, $"output_{Path.GetFileName(svgFilePath)}.png");
 
                 try
                 {
