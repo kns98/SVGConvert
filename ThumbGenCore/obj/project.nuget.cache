@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "dgSpecHash": "jpTTKNc+Wlo6bh08HxIceghgTjIXQ9XdCWGTzb3hhOFs2xSZKkTLZpmfk9zR1r8AWnvC21n/wwNsT/y2FKByCg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\kevin\\Source\\Repos\\SVGConvert\\ThumbGenCore\\ThumbGenCore.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\kevin\\.nuget\\packages\\excss\\4.2.3\\excss.4.2.3.nupkg.sha512",
+    "C:\\Users\\kevin\\.nuget\\packages\\harfbuzzsharp\\7.3.0\\harfbuzzsharp.7.3.0.nupkg.sha512",
+    "C:\\Users\\kevin\\.nuget\\packages\\harfbuzzsharp.nativeassets.macos\\7.3.0\\harfbuzzsharp.nativeassets.macos.7.3.0.nupkg.sha512",
+    "C:\\Users\\kevin\\.nuget\\packages\\harfbuzzsharp.nativeassets.win32\\7.3.0\\harfbuzzsharp.nativeassets.win32.7.3.0.nupkg.sha512",
+    "C:\\Users\\kevin\\.nuget\\packages\\shimskiasharp\\1.0.0.5\\shimskiasharp.1.0.0.5.nupkg.sha512",
+    "C:\\Users\\kevin\\.nuget\\packages\\skiasharp\\2.88.7\\skiasharp.2.88.7.nupkg.sha512",
+    "C:\\Users\\kevin\\.nuget\\packages\\skiasharp.harfbuzz\\2.88.6\\skiasharp.harfbuzz.2.88.6.nupkg.sha512",
+    "C:\\Users\\kevin\\.nuget\\packages\\skiasharp.nativeassets.macos\\2.88.7\\skiasharp.nativeassets.macos.2.88.7.nupkg.sha512",
+    "C:\\Users\\kevin\\.nuget\\packages\\skiasharp.nativeassets.win32\\2.88.7\\skiasharp.nativeassets.win32.2.88.7.nupkg.sha512",
+    "C:\\Users\\kevin\\.nuget\\packages\\svg.custom\\1.0.0.5\\svg.custom.1.0.0.5.nupkg.sha512",
+    "C:\\Users\\kevin\\.nuget\\packages\\svg.model\\1.0.0.5\\svg.model.1.0.0.5.nupkg.sha512",
+    "C:\\Users\\kevin\\.nuget\\packages\\svg.skia\\1.0.0.5\\svg.skia.1.0.0.5.nupkg.sha512"
+  ],
+  "logs": []
+}
